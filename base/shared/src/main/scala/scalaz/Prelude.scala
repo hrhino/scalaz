@@ -79,10 +79,11 @@ trait BaseData {
   val That = data.That
   val This = data.This
 
-  val \/-   = data.Disjunction.\/-
-  val -\/   = data.Disjunction.-\/
-  val Empty = data.MaybeImpl.Empty
-  val Just  = data.MaybeImpl.Just
+  val \/-   : data.Disjunction.\/-.type = data.Disjunction.\/-
+  val -\/   : data.Disjunction.-\/.type = data.Disjunction.-\/
+  val Maybe : data.Maybe.type           = data.Maybe
+  val Empty : data.Maybe.Empty.type     = data.Maybe.Empty
+  val Just  : data.Maybe.Just.type      = data.Maybe.Just
 }
 
 trait BaseDataAliases { self: BaseData =>

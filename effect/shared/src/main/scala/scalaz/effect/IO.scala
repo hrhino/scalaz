@@ -1,13 +1,11 @@
 // Copyright (C) 2017-2018 John A. De Goes. All rights reserved.
-package scalaz.effect
+package scalaz
+package effect
 
 import scala.annotation.switch
 import scala.concurrent.duration._
 
 import scalaz.data.Disjunction
-import scalaz.data.Disjunction._
-import scalaz.data.Maybe
-import scalaz.Void
 
 import scalaz.effect.Errors._
 
@@ -97,7 +95,7 @@ sealed abstract class IO[E, A] { self =>
    * } yield a
    * }}}
    */
-  final def fork[E2]: IO[E2, Fiber[E, A]] = IO.Fork(this, Maybe.empty)
+  final def fork[E2]: IO[E2, Fiber[E, A]] = IO.Fork(this, scalaz.data.Maybe.empty)
 
   /**
    * A more powerful version of `fork` that allows specifying a handler to be
@@ -164,7 +162,7 @@ sealed abstract class IO[E, A] { self =>
    * Widens the error type to any supertype. While `leftMap` suffices for this
    * purpose, this method is significantly faster for this purpose.
    */
-  final def widen[E2 >: E]: IO[E2, A] = self.asInstanceOf[IO[E2, A]]
+  final def widen[E2: E <~< ?]: IO[E2, A] = self.asInstanceOf[IO[E2, A]]
 
   /**
    * Executes this action, capturing both failure and success and returning
